@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelance Platform - Sign Up & Login</title>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: white;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            width: 400px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 1.5rem;
+            font-size: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #f1f1f1;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 16px;
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: #ff7eb3;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn:hover {
+            background: #ff4f93;
+        }
+
+        .github-btn {
+            background: #24292e;
+        }
+
+        .github-btn:hover {
+            background: #1b1f23;
+        }
+
+        .linkedin-btn {
+            background: #0077b5;
+        }
+
+        .linkedin-btn:hover {
+            background: #005f8d;
+        }
+
+        .toggle-form {
+            margin-top: 1rem;
+            font-size: 14px;
+        }
+
+        .toggle-form a {
+            color: #ff7eb3;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .toggle-form a:hover {
+            text-decoration: underline;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .success {
+            color: lightgreen;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sign Up Form -->
+        <form id="signup-form" style="display: none;">
+            <h2>Sign Up</h2>
+            <div class="form-group">
+                <label for="signup-email">Email</label>
+                <input type="email" id="signup-email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="signup-password">Password</label>
+                <input type="password" id="signup-password" placeholder="Enter password" required>
+            </div>
+            <button type="button" class="btn" onclick="emailSignUp()">Sign Up</button>
+            <button type="button" class="btn github-btn" onclick="githubAuth()">Sign Up with GitHub</button>
+            <button type="button" class="btn linkedin-btn" onclick="linkedinAuth()">Sign Up with LinkedIn</button>
+            <p class="toggle-form">
+                Already have an account? <a href="#" onclick="toggleForms()">Login</a>
+            </p>
+            <p id="signup-message"></p>
+        </form>
+
+        <!-- Login Form -->
+        <form id="login-form">
+            <h2>Login</h2>
+            <div class="form-group">
+                <label for="login-email">Email</label>
+                <input type="email" id="login-email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="login-password">Password</label>
+                <input type="password" id="login-password" placeholder="Enter password" required>
+            </div>
+            <button type="button" class="btn" onclick="emailLogin()">Login</button>
+            <button type="button" class="btn github-btn" onclick="githubAuth()">Login with GitHub</button>
+            <button type="button" class="btn linkedin-btn" onclick="linkedinAuth()">Login with LinkedIn</button>
+            <p class="toggle-form">
+                Don't have an account? <a href="#" onclick="toggleForms()">Sign Up</a>
+            </p>
+            <p id="login-message"></p>
+        </form>
+    </div>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "YOUR_FIREBASE_API_KEY",
+            authDomain: "YOUR_FIREBASE_AUTH_DOMAIN",
+            projectId: "YOUR_FIREBASE_PROJECT_ID",
+            storageBucket: "YOUR_FIREBASE_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_FIREBASE_MESSAGING_SENDER_ID",
+            appId: "YOUR_FIREBASE_APP_ID"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        function toggleForms() {
+            const signupForm = document.getElementById('signup-form');
+            const loginForm = document.getElementById('login-form');
+            
+            if (signupForm.style.display === 'none') {
+                signupForm.style.display = 'block';
+                loginForm.style.display = 'none';
+            } else {
+                signupForm.style.display = 'none';
+                loginForm.style.display = 'block';
+            }
+        }
+
+        function emailSignUp() {
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+
+            auth.createUserWithEmailAndPassword(email, password)
+                .then(userCredential => {
+                    document.getElementById('signup-message').innerHTML = "<span class='success'>Signup successful!</span>";
+                })
+                .catch(error => {
+                    document.getElementById('signup-message').innerHTML = "<span class='error'>" + error.message + "</span>";
+                });
+        }
+
+        function emailLogin() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            auth.signInWithEmailAndPassword(email, password)
+                .then(userCredential => {
+                    document.getElementById('login-message').innerHTML = "<span class='success'>Login successful!</span>";
+                })
+                .catch(error => {
+                    document.getElementById('login-message').innerHTML = "<span class='error'>" + error.message + "</span>";
+                });
+        }
+
+        function githubAuth() {
+            window.location.href = "https://github.com/login/oauth/authorize?client_id=YOUR_GITHUB_CLIENT_ID&scope=user";
+        }
+
+        function linkedinAuth() {
+            window.location.href = "https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=YOUR_LINKEDIN_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URI&scope=r_liteprofile%20r_emailaddress";
+        }
+    </script>
+</body>
+</html>

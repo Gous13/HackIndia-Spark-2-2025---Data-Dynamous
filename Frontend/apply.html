@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply for Job - Mindlancer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #f5f7fb;
+            color: #333;
+        }
+
+        .navbar {
+            background: white;
+            padding: 1rem 5%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #764ba2;
+            text-decoration: none;
+        }
+
+        .application-container {
+            max-width: 800px;
+            margin: 100px auto 50px;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #764ba2;
+        }
+
+        .form-section {
+            margin-bottom: 2rem;
+        }
+
+        .form-section h3 {
+            margin-bottom: 1rem;
+            color: #333;
+            border-bottom: 2px solid #764ba2;
+            padding-bottom: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #764ba2;
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .skill-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .file-upload {
+            border: 2px dashed #ddd;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+
+        .file-upload:hover {
+            border-color: #764ba2;
+        }
+
+        .file-upload i {
+            font-size: 2rem;
+            color: #764ba2;
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 1rem;
+            background: #764ba2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #5f3d82;
+        }
+
+        .required {
+            color: #e74c3c;
+            margin-left: 3px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="index.html" class="logo">Mindlancer</a>
+        </div>
+    </nav>
+
+    <div class="application-container">
+        <div class="form-header">
+            <h2>Job Application Form</h2>
+            <p>Please fill in all required fields</p>
+        </div>
+
+        <form id="job-application-form">
+            <div class="form-section">
+                <h3>Personal Information</h3>
+                <div class="form-group">
+                    <label>Full Name<span class="required">*</span></label>
+                    <input type="text" required>
+                </div>
+                <div class="form-group">
+                    <label>Email<span class="required">*</span></label>
+                    <input type="email" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number<span class="required">*</span></label>
+                    <input type="tel" required>
+                </div>
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" placeholder="City, Country">
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>Professional Information</h3>
+                <div class="form-group">
+                    <label>Years of Experience<span class="required">*</span></label>
+                    <select required>
+                        <option value="">Select experience</option>
+                        <option value="0-1">0-1 years</option>
+                        <option value="1-3">1-3 years</option>
+                        <option value="3-5">3-5 years</option>
+                        <option value="5+">5+ years</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>LinkedIn Profile</label>
+                    <input type="url" placeholder="https://linkedin.com/in/your-profile">
+                </div>
+                <div class="form-group">
+                    <label>Portfolio Website</label>
+                    <input type="url" placeholder="https://your-portfolio.com">
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>Skills & Expertise</h3>
+                <div class="form-group">
+                    <label>Select Your Skills<span class="required">*</span></label>
+                    <div class="skills-grid">
+                        <div class="skill-checkbox">
+                            <input type="checkbox" id="skill1" name="skills[]">
+                            <label for="skill1">HTML/CSS</label>
+                        </div>
+                        <div class="skill-checkbox">
+                            <input type="checkbox" id="skill2" name="skills[]">
+                            <label for="skill2">JavaScript</label>
+                        </div>
+                        <div class="skill-checkbox">
+                            <input type="checkbox" id="skill3" name="skills[]">
+                            <label for="skill3">React</label>
+                        </div>
+                        <div class="skill-checkbox">
+                            <input type="checkbox" id="skill4" name="skills[]">
+                            <label for="skill4">Node.js</label>
+                        </div>
+                        <div class="skill-checkbox">
+                            <input type="checkbox" id="skill5" name="skills[]">
+                            <label for="skill5">Python</label>
+                        </div>
+                        <div class="skill-checkbox">
+                            <input type="checkbox" id="skill6" name="skills[]">
+                            <label for="skill6">UI/UX Design</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>Additional Information</h3>
+                <div class="form-group">
+                    <label>Cover Letter<span class="required">*</span></label>
+                    <textarea required placeholder="Tell us why you're perfect for this role..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Resume/CV<span class="required">*</span></label>
+                    <div class="file-upload" onclick="document.getElementById('resume').click()">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Click to upload your resume (PDF, DOC, DOCX)</p>
+                        <input type="file" id="resume" hidden accept=".pdf,.doc,.docx" required>
+                        <p id="file-name"></p>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn">Submit Application</button>
+        </form>
+    </div>
+
+    <script>
+        // Handle file upload display
+        document.getElementById('resume').addEventListener('change', function(e) {
+            const fileName = e.target.files[0]?.name;
+            document.getElementById('file-name').textContent = fileName || '';
+        });
+
+        // Handle form submission
+        document.getElementById('job-application-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Here you would typically send the form data to your backend
+            alert('Application submitted successfully!');
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>

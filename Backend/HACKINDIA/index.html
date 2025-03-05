@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mindlancer - Find Your Perfect Freelance Match</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #f5f7fb;
+            color: #333;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background: white;
+            padding: 1rem 5%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #764ba2;
+        }
+
+        .nav-links a {
+            margin-left: 2rem;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 8rem 5% 4rem;
+            color: white;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .search-bar {
+            max-width: 600px;
+            margin: 2rem auto;
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        /* Jobs Section */
+        .jobs-container {
+            padding: 3rem 5%;
+        }
+
+        .filters {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid #764ba2;
+            border-radius: 20px;
+            background: white;
+            color: #764ba2;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .filter-btn.active {
+            background: #764ba2;
+            color: white;
+        }
+
+        .job-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .job-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .job-card h3 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .job-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            color: #666;
+        }
+
+        .skills-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .skill-tag {
+            background: #f0f2f5;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            color: #764ba2;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            background: #764ba2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #5f3d82;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links a {
+                margin-left: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">Mindlancer</div>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">Find Work</a>
+                <a href="#">My Projects</a>
+                <a href="#">Messages</a>
+                <a href="apply.html" class="btn">Apply for Job</a>
+
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>Find the Perfect Freelance Services</h1>
+        <p>Connect with talented freelancers and get your projects done</p>
+        <div class="search-bar">
+            <input type="text" placeholder="Search for skills or jobs...">
+            <button class="btn">Search</button>
+        </div>
+    </section>
+
+    <section class="jobs-container">
+        <div class="filters">
+            <button class="filter-btn active">All Jobs</button>
+            <button class="filter-btn">Web Development</button>
+            <button class="filter-btn">Design</button>
+            <button class="filter-btn">Writing</button>
+            <button class="filter-btn">Marketing</button>
+        </div>
+
+        <div class="job-cards">
+            <!-- Job cards will be dynamically inserted here -->
+        </div>
+    </section>
+
+    <script>
+        // Sample job data
+        const jobs = [
+            {
+                id: 1,
+                title: "Full Stack Developer Needed",
+                rate: "$50-70/hr",
+                posted: "2 hours ago",
+                description: "Looking for an experienced full stack developer for a long-term project...",
+                skills: ["React", "Node.js", "MongoDB"],
+                category: "Web Development"
+            },
+            {
+                id: 2,
+                title: "UI/UX Designer",
+                rate: "$40-60/hr",
+                posted: "5 hours ago",
+                description: "Seeking a creative UI/UX designer for an innovative mobile app...",
+                skills: ["Figma", "UI Design", "Prototyping"],
+                category: "Design"
+            },
+            {
+                id: 3,
+                title: "Content Writer",
+                rate: "$30-45/hr",
+                posted: "1 day ago",
+                description: "Looking for a skilled content writer with SEO experience...",
+                skills: ["SEO", "Copywriting", "Blog Writing"],
+                category: "Writing"
+            },
+            {
+                id: 4,
+                title: "Digital Marketing Specialist",
+                rate: "$45-55/hr",
+                posted: "3 hours ago",
+                description: "Need an experienced digital marketer for social media campaigns...",
+                skills: ["Social Media", "SEO", "Content Strategy"],
+                category: "Marketing"
+            }
+        ];
+
+        // Function to create job card HTML
+        function createJobCard(job) {
+            return `
+                <div class="job-card">
+                    <h3>${job.title}</h3>
+                    <div class="job-info">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>${job.rate}</span>
+                    </div>
+                    <div class="job-info">
+                        <i class="fas fa-clock"></i>
+                        <span>${job.posted}</span>
+                    </div>
+                    <p>${job.description}</p>
+                    <div class="skills-tags">
+                        ${job.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Function to render jobs
+        function renderJobs(jobsToRender) {
+            const jobCardsContainer = document.querySelector('.job-cards');
+            jobCardsContainer.innerHTML = jobsToRender.map(job => createJobCard(job)).join('');
+        }
+
+        // Search functionality
+        const searchInput = document.querySelector('.search-bar input');
+        const searchButton = document.querySelector('.search-bar button');
+
+        function searchJobs() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const filteredJobs = jobs.filter(job => {
+                return job.title.toLowerCase().includes(searchTerm) ||
+                       job.description.toLowerCase().includes(searchTerm) ||
+                       job.skills.some(skill => skill.toLowerCase().includes(searchTerm));
+            });
+            renderJobs(filteredJobs);
+        }
+
+        searchButton.addEventListener('click', searchJobs);
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                searchJobs();
+            }
+        });
+
+        // Filter buttons functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const category = btn.textContent;
+                if (category === 'All Jobs') {
+                    renderJobs(jobs);
+                } else {
+                    const filteredJobs = jobs.filter(job => job.category === category);
+                    renderJobs(filteredJobs);
+                }
+            });
+        });
+
+        // Initialize page with all jobs
+        renderJobs(jobs);
+    </script>
+</body>
+</html>

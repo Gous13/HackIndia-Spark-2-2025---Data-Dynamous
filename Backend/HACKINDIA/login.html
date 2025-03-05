@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelance Platform - Sign Up & Login</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: white;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            width: 400px;
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 1.5rem;
+            font-size: 24px;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 16px;
+        }
+        .btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: #ff7eb3;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+            margin-bottom: 0.5rem;
+        }
+        .btn:hover {
+            background: #ff4f93;
+        }
+        .toggle-form {
+            margin-top: 1rem;
+            font-size: 14px;
+        }
+        .toggle-form a {
+            color: #ff7eb3;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .toggle-form a:hover {
+            text-decoration: underline;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .success {
+            color: lightgreen;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form id="signup-form" style="display: none;">
+            <h2>Sign Up</h2>
+            <div class="form-group">
+                <label for="signup-email">Email</label>
+                <input type="email" id="signup-email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="signup-password">Password</label>
+                <input type="password" id="signup-password" placeholder="Enter password" required>
+            </div>
+            <button type="button" class="btn" onclick="emailSignUp()">Sign Up</button>
+            <p class="toggle-form">
+                Already have an account? <a href="#" onclick="toggleForms()">Login</a>
+            </p>
+            <p id="signup-message"></p>
+        </form>
+
+        <form id="login-form">
+            <h2>Login</h2>
+            <div class="form-group">
+                <label for="login-email">Email</label>
+                <input type="email" id="login-email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="login-password">Password</label>
+                <input type="password" id="login-password" placeholder="Enter password" required>
+            </div>
+            <button type="button" class="btn" onclick="emailLogin()">Login</button>
+            <p class="toggle-form">
+                Don't have an account? <a href="#" onclick="toggleForms()">Sign Up</a>
+            </p>
+            <p id="login-message"></p>
+        </form>
+    </div>
+
+    <script>
+        function toggleForms() {
+            document.getElementById('signup-form').style.display = document.getElementById('signup-form').style.display === 'none' ? 'block' : 'none';
+            document.getElementById('login-form').style.display = document.getElementById('login-form').style.display === 'none' ? 'block' : 'none';
+        }
+
+        function emailSignUp() {
+            fetch("http://localhost:5000/signup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: document.getElementById('signup-email').value, password: document.getElementById('signup-password').value })
+            })
+            .then(res => res.json()).then(data => alert(data.message));
+        }
+
+        function emailLogin() {
+            fetch("http://localhost:5000/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: document.getElementById('login-email').value, password: document.getElementById('login-password').value })
+            })
+            .then(res => res.json()).then(data => alert(data.message));
+        }
+    </script>
+</body>
+</html>
